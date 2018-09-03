@@ -35,7 +35,7 @@ namespace CoreStudy
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddMvc();
         }
 

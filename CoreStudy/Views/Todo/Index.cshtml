@@ -1,0 +1,43 @@
+﻿@model TodoViewModel
+@using Humanizer;
+@{
+    ViewData["Title"] = "Todo List";
+}
+
+<h2>Todo List</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>&#x2714;</th>
+            <th>Item</th>
+            <th>Due</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @if (item.IsDone)
+                    {
+                        <input type="checkbox" class="done-checkbox" checked="checked" disabled="disabled">
+                    }
+                    else
+                    {
+                        <form asp-action="MarkDone" method="post">
+                            <input type="checkbox" class="done-checkbox">
+                            <input type="hidden" name="id" value="@item.Id" />
+                        </form>
+                    }
+                    
+                </td>
+                <td>@item.Title</td>
+                <td>@item.DueAt.Humanize()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="frmNew">
+    @await Html.PartialAsync("AddItemPartial", new TodoItem())
+</div>
